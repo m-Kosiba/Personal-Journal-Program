@@ -1,0 +1,51 @@
+# Personal Journal Program
+
+entry_count = 0  # global counter: entries saved this run
+
+
+def save_entry(text):
+    """Append one entry to journal.txt and update the global counter."""
+    global entry_count
+    try:
+        with open("journal.txt", "a") as file:
+            file.write(text + "\n")
+    except OSError:
+        print("Sorry, the journal file couldn't be opened. Your entry was not saved.")
+        return
+    entry_count += 1
+
+
+def read_journal():
+    """Print every entry in journal.txt (challenge)."""
+    try:
+        with open("journal.txt", "r") as file:
+            contents = file.read()
+    except FileNotFoundError:
+        print("No entries yet! Write one first.")
+        return
+
+    if contents == "":
+        print("No entries yet! Write one first.")
+    else:
+        print("\n--- Your Journal ---")
+        print(contents)
+
+
+while True:
+    print("\n1) Write a journal entry")
+    print("2) Read the whole journal")
+    print("3) Quit")
+    choice = input("Choose 1, 2, or 3: ")
+
+    if choice == "1":
+        entry = input("Write your journal entry: ")
+        save_entry(entry)
+        print(f"Entries saved this run: {entry_count}")
+    elif choice == "2":
+        read_journal()
+    elif choice == "3":
+        print("Goodbye!")
+        break
+    else:
+        print("Please enter 1, 2, or 3.")
+        
